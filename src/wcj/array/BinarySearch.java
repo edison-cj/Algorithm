@@ -23,8 +23,38 @@ public class BinarySearch {
             System.out.print(num + " ");
         }
         System.out.println();
+
         System.out.println("69. x 的平方根");
         System.out.println("算数平平方根:" + solution.mySqrt(1));
+        System.out.println();
+
+        System.out.println("367. 有效的完全平方数");
+        System.out.println("输出：" + solution.isPerfectSquare(8));
+        System.out.println();
+
+        System.out.println("27. 移除元素");
+        int[] nums1 = new int[]{0,1,2,2,3,0,4,2};
+        System.out.println("个数为：" + solution.removeElement(nums1,2));
+        System.out.println();
+
+        System.out.println("26. 删除有序数组中的重复项");
+        int[] nums2 = {1,1,2};
+        System.out.println("长度为：" + solution.removeDuplicates(nums2));
+        System.out.println();
+
+        System.out.println("283. 移动零");
+        int[] nums3 = {0,1,0,3,12};
+        solution.moveZeroes(nums3);
+        for (int num : nums3) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+
+        System.out.println("844.比较含退格的字符串");
+        String s = "ab#c";
+        String t = "ad#c";
+        System.out.println("输出：" + solution.backspaceCompare(s,t));
+
     }
 }
 
@@ -130,4 +160,117 @@ class Solution{
         return ans;
     }
 
+    public boolean isPerfectSquare(int num) {
+        int left = 0;
+        int right = num;
+        while (left <= right) {
+            int mid = (right - left) / 2 + left;
+            if ((long) mid * mid > num) {
+                right = mid - 1;
+            } else if ((long) mid * mid < num) {
+                left = mid + 1;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int removeElement(int[] nums, int val) {
+        int slowIndex = 0;
+        for (int fastIndex = 0; fastIndex < nums.length; fastIndex++) {
+           if (nums[fastIndex] != val) {
+               nums[slowIndex++] = nums[fastIndex];
+           }
+        }
+        return slowIndex;
+    }
+
+    public int removeDuplicates(int[] nums) {
+        int slowIndex = 0;
+        int fastIndex = 1;
+        while (fastIndex < nums.length) {
+            if (nums[slowIndex] != nums[fastIndex]) {
+                nums[++slowIndex] = nums[fastIndex];
+            }
+            fastIndex++;
+        }
+        return slowIndex + 1;
+    }
+
+    public int removeDuplicates2(int[] nums) {
+        int slowIndex = 0;
+        for (int fastIndex = 1;fastIndex < nums.length; fastIndex++) {
+            if(nums[slowIndex] != nums[fastIndex]) {
+                nums[++slowIndex] = nums[fastIndex];
+            }
+        }
+        return slowIndex + 1;
+    }
+
+    public void moveZeroes(int[] nums) {
+        int slowIndex = 0;
+        for (int fastIndex = 0; fastIndex < nums.length; fastIndex++) {
+            if(nums[fastIndex] != 0) {
+                int temp = nums[slowIndex];
+                nums[slowIndex++] = nums[fastIndex];
+                nums[fastIndex] = temp;
+            }
+        }
+    }
+
+    public boolean backspaceCompare(String s, String t) {
+
+        int i = s.length() - 1;
+        int j = t.length() - 1;
+        int skipS = 0;
+        int skipT = 0;
+
+        while (i >= 0 || j >= 0) {
+            while (i >= 0) {
+                if (s.charAt(i) == '#') {
+                    skipS++;
+                    i--;
+                } else if (skipS > 0) {
+                    skipS--;
+                    i--;
+                } else {
+                    break;
+                }
+            }
+            while (j >= 0) {
+                if (t.charAt(j) == '#') {
+                    j--;
+                    skipT++;
+                } else if (skipT > 0) {
+                    skipT--;
+                    j--;
+                } else {
+                    break;
+                }
+            }
+            if (i >= 0 && j >= 0) {
+                if (s.charAt(i) != t.charAt(j)) {
+                    return false;
+                }
+            }else {
+                if (i >= 0 || j >= 0) {
+                    return  false;
+                }
+            }
+            i--;
+            j--;
+
+        }
+
+        return true;
+    }
+
+    public int[] sortedSquares(int[] nums) {
+
+
+        return nums;
+    }
 }
+
+
