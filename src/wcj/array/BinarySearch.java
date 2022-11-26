@@ -1,6 +1,8 @@
 package wcj.array;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -54,6 +56,28 @@ public class BinarySearch {
         String s = "ab#c";
         String t = "ad#c";
         System.out.println("输出：" + solution.backspaceCompare(s,t));
+        System.out.println();
+
+        System.out.println("977. 有序数组的平方");
+        int[] nums4 = {1,2,1};
+        System.out.println(Arrays.toString(solution.sortedSquares(nums4)));
+        System.out.println();
+
+        System.out.println("209. 长度最小的子数组");
+        int[] nums5 = {5,1,3,5,10,7,4,9,2,8};
+        System.out.println(solution.minSubArrayLen(15,nums5));
+        System.out.println();
+
+        System.out.println("904. 水果成篮");
+        int[] nums6 = {3,3,3,1,2,1,1,2,3,3,4};
+        System.out.println(solution.totalFruit(nums6));
+        System.out.println();
+
+        System.out.println("76. 最小覆盖子串");
+        String s1 = "ADOBECODEBANC";
+        String t1 = "ABC";
+        System.out.println(solution.minWindow(s1,t1));
+        System.out.println();
 
     }
 }
@@ -268,9 +292,78 @@ class Solution{
 
     public int[] sortedSquares(int[] nums) {
 
+        int[] res = new int[nums.length];
+        int left = 0;
+        int right = nums.length - 1;
+        int k = nums.length - 1;
 
-        return nums;
+        while (left <= right) {
+            if (nums[left] * nums[left] > nums[right] * nums[right]) {
+                res[k--] = nums[left] * nums[left];
+                left++;
+            } else {
+                res[k--] = nums[right] * nums[right];
+                right--;
+            }
+        }
+
+        return res;
     }
+
+    public int minSubArrayLen(int target, int[] nums) {
+
+        int min = nums.length;
+        int left = 0;
+        int sum = 0;
+        for (int right = 0; right < nums.length; right++) {
+            sum += nums[right];
+            while (right >= left && sum >= target) {
+                if (right - left + 1 < min) {
+                    min = right - left + 1;
+                }
+                sum -= nums[left++];
+            }
+        }
+        if (left == 0) {
+            min = 0;
+        }
+        return min;
+    }
+
+    public int totalFruit(int[] fruits) {
+
+        int maxLength = 1;
+        int left = 0;
+        int temp = 0;
+        boolean flag = true;
+        for (int right = 1; right < fruits.length; right++) {
+            if (fruits[right] != fruits[left] && flag) {
+                temp = fruits[right];
+                flag = false;
+            }
+            if (fruits[right] != fruits[left] && fruits[right] != temp) {
+                flag = true;
+                if (right - left > maxLength) {
+                    maxLength = right - left;
+                }
+                while (fruits[++left] != temp);
+                right = left;
+            }
+            if (right == fruits.length - 1) {
+                if (right - left + 1 > maxLength) {
+                    maxLength = right - left + 1;
+                }
+            }
+
+        }
+        return maxLength;
+    }
+
+    public String minWindow(String s, String t) {
+
+        return null;
+    }
+
 }
 
 
