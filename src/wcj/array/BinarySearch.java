@@ -1,9 +1,6 @@
 package wcj.array;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * @version 1.0
@@ -78,6 +75,15 @@ public class BinarySearch {
         String t1 = "ABC";
         System.out.println(solution.minWindow(s1,t1));
         System.out.println();
+
+        System.out.println("59. 螺旋矩阵 II");
+        int[][] mat = solution.generateMatrix(3);
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[i].length; j++) {
+                System.out.print(mat[i][j] + " ");
+            }
+            System.out.println();
+        }
 
     }
 }
@@ -362,6 +368,54 @@ class Solution{
     public String minWindow(String s, String t) {
 
         return null;
+    }
+
+    public int[][] generateMatrix(int n) {
+
+        int[][] mat = new int[n][n];
+        int l = 0;
+        int r = n - 1;
+        int t = 0;
+        int b = n - 1;
+        int num = 1;
+        int tar = n * n;
+         while (num <= tar) {
+            for (int i = l; i <= r; i++) {
+                mat[t][i] = num++;
+            }
+            t++;
+
+            for (int i = t; i <= b; i++) {
+                mat[i][r] = num++;
+            }
+            r--;
+
+            for (int i = r; i >= l; i--) {
+                mat[b][i] = num++;
+            }
+            b--;
+
+            for (int i = b; i >= t; i--) {
+                mat[i][l] = num++;
+            }
+            l++;
+
+         }
+         return mat;
+    }
+
+    public List<Integer> spiralOrder(int[][] matrix) {
+
+        List<Integer> list = new ArrayList<>();
+        int l = 0, r = matrix[matrix.length].length - 1;
+        int t = 0, b = matrix.length - 1;
+        int loop = matrix.length < matrix[matrix.length].length ? matrix.length : matrix[matrix.length].length;
+
+        while (loop-- > 0) {
+
+        }
+
+        return list;
     }
 
 }
